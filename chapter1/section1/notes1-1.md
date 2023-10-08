@@ -2,6 +2,11 @@
 
 > We conjure the spirits of the computer with our spells.
 
+> The contrast between function and procedure is a reflection of the general
+> distinction between describing properties of things and describing how to do
+> things, or, as it is sometimes referred to, the distinction between
+> declarative knowledge and imperative knowledge.
+
 ---
 
 A good programming languages can help us manage the complexity of our ideas by
@@ -49,6 +54,8 @@ Applicative-order means to repeatedly evaluate and apply:
 136
 ```
 
+_Lisp uses applicative-order evaluation._
+
 With normal-order, we fully expand first and then reduce:
 
 ```scheme
@@ -59,8 +66,6 @@ With normal-order, we fully expand first and then reduce:
 (+ 36 100)
 136
 ```
-
-_Lisp uses applicative-order evaluation._
 
 ---
 
@@ -76,17 +81,36 @@ In Lisp, case analyses are done using `cond` followed by a list of clauses. A
 clause is composed of a _predicate_ (a procedure or application that returns a
 boolean) and a _consequent expression_ (the corresponding value).
 
-Some other forms of the above:
+There are other ways of performing case analyses. One of them is with `else`:
 
 ```scheme
 (cond ((< x 0) (- x))
       (else x))
-
-(if (< x 0) ; special form
-    (- x)
-    x)
 ```
 
-We can treat `else` as a predicate that always returns true such that it will
+where we can treat `else` as a predicate that always returns true such that it will
 always return its consequent expression if the other cases above are false.
 
+Another way is using `if`:
+
+```scheme
+(if (< x 0)
+    (- x) ; consequent
+    x) ; alternative
+```
+
+Note that `if` is a special form, as the alternative is only evaluated if the
+predicate is false.
+
+---
+
+Predicates can also be combined into compound predicates, often with logical
+operators.
+
+```scheme
+(and a b c ... z)
+(or a b c ... z)
+```
+
+where each sub-predicate is lazily evaluated in order (left to right). Because
+of this lazy evaluation, `and` and `or` are also special forms.
