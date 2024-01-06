@@ -191,3 +191,4 @@ more certain we are. This is called as the Fermat test.
 Because the `expmod` procedure uses successful squaring, its time complexity is
 $O(\log{n})$.
 
+Something to note though is that the Carmichael numbers can fool this test!
